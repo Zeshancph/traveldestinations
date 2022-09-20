@@ -14,3 +14,11 @@ formCreate.addEventListener("submit", function (event) {
     console.log("form not validated, do nothing");
   }
 });
+
+document.querySelectorAll(".input_date").forEach((elem) => {
+  elem.addEventListener("change", function (event) {
+    if (event.target.value != "") {
+      elem.classList.add("input_date--has-value");
+    }
+  });
+});

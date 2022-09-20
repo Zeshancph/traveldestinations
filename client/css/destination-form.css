@@ -27,7 +27,7 @@ label input:not(label input[type="file"]),
 label textarea {
   margin-top: 0.2rem;
   margin-bottom: 0;
-  border: 1px solid gray;
+  border: 1px solid #86513e;
   border-radius: 0.2rem;
   padding: 0.3rem;
 }
@@ -68,13 +68,21 @@ label.error textarea {
 
 .input_title::placeholder,
 .input_country::placeholder,
-.input_location::placeholder {
+.input_location::placeholder,
+.input_description::placeholder {
   font-family: "Open Sans", sans-serif;
+  /* font-weight: 400; */
+  color: #86513e;
+  opacity: 0.6;
 }
 .input_title::-ms-input-placeholder,
 .input_country::-ms-input-placeholder,
-.input_location::-ms-input-placeholder {
+.input_location::-ms-input-placeholder,
+.input_description::-ms-input-placeholder {
   font-family: "Open Sans", sans-serif;
+  /* font-weight: 400; */
+  color: #86513e;
+  opacity: 0.6;
 }
 
 .date_wrapper {
@@ -86,6 +94,24 @@ label.error textarea {
   display: inline-flex;
 }
 
+/* placeholder text style */
+input[type="date"]::-webkit-datetime-edit-text,
+input[type="date"]::-webkit-datetime-edit-month-field,
+input[type="date"]::-webkit-datetime-edit-day-field,
+input[type="date"]::-webkit-datetime-edit-year-field {
+  color: #86513e;
+  opacity: 0.6;
+}
+
+/* regular text style */
+input[type="date"].input_date--has-value::-webkit-datetime-edit-text,
+input[type="date"].input_date--has-value::-webkit-datetime-edit-month-field,
+input[type="date"].input_date--has-value::-webkit-datetime-edit-day-field,
+input[type="date"].input_date--has-value::-webkit-datetime-edit-year-field {
+  color: #0e0c07;
+  opacity: 1;
+}
+
 .input_picture {
   font-family: "Open Sans", sans-serif;
 }
@@ -95,6 +121,16 @@ label.error textarea {
   font-family: "Open Sans", sans-serif;
   font-size: 19px;
   cursor: pointer;
+  border: 1px solid #86513e;
+  border-radius: 0.2rem;
+  color: #86513e;
+  background-color: transparent;
+  transition: background-color 0.1s;
+}
+
+.submit_destination:hover {
+  background-color: #f0cabd;
+  transition: background-color 0.1s;
 }
 
 /*------image preview------

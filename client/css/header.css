@@ -10,8 +10,9 @@
 .logo {
   font-family: "Kalam", cursive;
   font-size: 25px;
-  font-weight: 700;
+  font-weight: 600;
   text-decoration: none;
+  color: #86513e;
 }
 
 .nav_links {
@@ -27,4 +28,12 @@
 
 .nav_links > .nav_link > a {
   text-decoration: none;
+  color: #86513e;
+  transition: color 0.2s;
+}
+
+.nav_links > .nav_link > a:hover,
+.nav_links > .nav_link > a:active {
+  color: #402015;
+  transition: color 0.1s;
 }
