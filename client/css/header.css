@@ -1,0 +1,30 @@
+/*--------------header-------------
+----------------------------------*/
+.main_nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+}
+
+.logo {
+  font-family: "Kalam", cursive;
+  font-size: 25px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.nav_links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.nav_links > .nav_link {
+  padding: 0 1rem;
+}
+
+.nav_links > .nav_link > a {
+  text-decoration: none;
+}

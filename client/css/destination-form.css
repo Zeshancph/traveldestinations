@@ -1,0 +1,106 @@
+@import url("https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap");
+
+/*--------------new destination page-------------
+-----------------------------------------------*/
+.destination {
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0;
+}
+
+.destination > h2 {
+  text-align: center;
+}
+
+/*-----form-----*/
+.destination_form {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+label input:not(label input[type="file"]),
+label textarea {
+  margin-top: 0.2rem;
+  margin-bottom: 0;
+  border: 1px solid gray;
+  border-radius: 0.2rem;
+  padding: 0.3rem;
+}
+
+label .help {
+  font-size: 0.8rem;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.2s;
+}
+
+label.label_picture .help {
+  visibility: visible;
+  opacity: 1;
+  font-style: italic;
+}
+
+label.error .help {
+  visibility: visible;
+  opacity: 1;
+  color: #d6160f;
+  transition: all 0.2s;
+}
+
+label.error input:not(label input[type="file"]),
+label.error textarea {
+  border-color: #d6160f;
+}
+
+.input_title,
+.input_country,
+.input_location,
+.input_description,
+.input_picture {
+  display: block;
+  width: 95%;
+}
+
+.input_title::placeholder,
+.input_country::placeholder,
+.input_location::placeholder {
+  font-family: "Open Sans", sans-serif;
+}
+.input_title::-ms-input-placeholder,
+.input_country::-ms-input-placeholder,
+.input_location::-ms-input-placeholder {
+  font-family: "Open Sans", sans-serif;
+}
+
+.date_wrapper {
+  display: block;
+}
+
+.input_date {
+  width: 150px;
+  display: inline-flex;
+}
+
+.input_picture {
+  font-family: "Open Sans", sans-serif;
+}
+
+.submit_destination {
+  padding: 0.2rem 0.6rem;
+  font-family: "Open Sans", sans-serif;
+  font-size: 19px;
+  cursor: pointer;
+}
+
+/*------image preview------
+--------------------------*/
+.picture_preview {
+  max-width: 300px;
+  height: auto;
+  max-height: 225px;
+}

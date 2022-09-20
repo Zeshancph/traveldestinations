@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/destination-form.css" />
+    <link rel="stylesheet" href="css/header.css" />
+    <title>Edit Travel Destination</title>
+  </head>
+  <body>
+    <header class="main_header">
+      <nav class="main_nav">
+        <div class="logo_wrapper">
+          <a href="index.html" class="logo">MyTravelJournal</a>
+        </div>
+        <ul class="nav_links">
+          <li class="nav_link">
+            <a href="new_destination.html">New destination</a>
+          </li>
+          <li class="nav_link">
+            <a href="edit_destination.html">Edit destination</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="destination">
+        <h2>Edit Travel Destination</h2>
+        <form class="destination_form" id="update_destination">
+          <label for="title" class="label_title"
+            >Title
+            <input
+              type="text"
+              name="title"
+              id="title"
+              class="input_title"
+              required
+              value=""
+            />
+            <span class="help">Title cannot be empty</span>
+          </label>
+          <label class="label_date"
+            >Date
+            <div class="date_wrapper">
+              <input
+                type="date"
+                name="date_from"
+                id="date_from"
+                class="input_date"
+                value=""
+                required
+              />
+              <span class="dash"> - </span>
+              <input
+                type="date"
+                name="date_to"
+                id="date_to"
+                class="input_date"
+                value=""
+                required
+              />
+            </div>
+            <span class="help">Trip start cannot be later than trip end</span>
+          </label>
+
+          <label class="label_country"
+            >Country
+            <input
+              type="text"
+              name="country"
+              id="country"
+              class="input_country"
+              required
+              value=""
+            />
+            <span class="help">Country cannot be empty</span>
+          </label>
+
+          <label class="label_location"
+            >Location
+            <input
+              type="text"
+              name="location"
+              id="location"
+              class="input_location"
+              required
+              value=""
+            />
+            <span class="help">Location cannot be empty</span>
+          </label>
+
+          <label class="label_description"
+            >Description
+            <textarea
+              name="description"
+              id="description"
+              cols="30"
+              rows="5"
+              class="input_description"
+              required
+            ></textarea>
+            <span class="help">Description cannot be empty</span>
+          </label>
+
+          <div class="picture_wrapper">
+            <img
+              src="img/placeholder-300x225.jpg"
+              alt="file preview"
+              id="picture_preview"
+              class="picture_preview"
+            />
+            <label class="label_picture">
+              <input
+                type="file"
+                name="picture"
+                id="picture"
+                class="input_picture"
+                required
+              />
+              <span class="help"
+                >Photo in jpeg, jpg, or png format. Image aspect ratio should be
+                4:3, customize and download the right image
+                <a href="https://croppola.com/#aspectRatio=4:3" target="_blank"
+                  >here</a
+                ></span
+              >
+              <!-- https://croppola.com/#aspectRatio=4:3 -->
+            </label>
+          </div>
+
+          <button
+            type="submit"
+            name="update_destination"
+            class="submit_destination"
+          >
+            update
+          </button>
+        </form>
+      </section>
+    </main>
+
+    <script type="module" src="js/edit_destination.js"></script>
+  </body>
+</html>
