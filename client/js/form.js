@@ -94,8 +94,8 @@ function scrollToError(form) {
 export function collectFormData(form) {
   return {
     title: form.elements.title.value.trim(),
-    date_from: form.elements.date_from.value,
-    date_to: form.elements.date_to.value,
+    date_from: new Date(form.elements.date_from.value),
+    date_to: new Date(form.elements.date_to.value),
     country: form.elements.country.value.trim(),
     location: form.elements.location.value.trim(),
     description: form.elements.description.value.trim(),
@@ -106,9 +106,12 @@ export function collectFormData(form) {
 export function clearForm(form) {
   form.elements.title.value = "";
   form.elements.date_from.value = "";
+  form.elements.date_from.classList.remove("input_date--has-value");
   form.elements.date_to.value = "";
+  form.elements.date_to.classList.remove("input_date--has-value");
   form.elements.country.value = "";
   form.elements.location.value = "";
   form.elements.description.value = "";
-  form.elements.picture = "";
+  form.elements.picture.value = "";
+  form.querySelector("#picture_preview").src = "img/placeholder-300x225.jpg";
 }

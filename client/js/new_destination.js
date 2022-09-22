@@ -14,12 +14,13 @@ formCreate.addEventListener("submit", async function (event) {
   if (formValidated) {
     console.log("form validated, post changes");
     const destination = collectFormData(formCreate);
-    console.log(destination);
     const serverResponse = await createDestination(destination);
-    if (serverResponse.status === 200) {
-      console.log(serverResponse);
-      // clearForm(formCreate);
-      // modifyEditLink(serverResponse.id);
+    if ((await serverResponse.status) === "success") {
+      console.log(await serverResponse);
+      clearForm(formCreate);
+      modifyEditLink(serverResponse.id);
+    } else {
+      console.error(await serverResponse.status);
     }
   } else {
     console.log("form not validated, do nothing");
@@ -36,4 +37,5 @@ document.querySelectorAll(".input_date").forEach((elem) => {
 
 function modifyEditLink(id) {
   document.querySelector("#edit_link").href = `edit_destination.html?id=${id}`;
+  console.log("new destination id has been added to the edit link");
 }

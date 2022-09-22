@@ -22,31 +22,36 @@ mongodb.connect(
 );
 
 app.post("/destinations", async (req, res) => {
-  const query = req.body;
+  let query = req.body;
+  query = { ...query, date_from: new Date(query.date_from) };
+  query = { ...query, date_to: new Date(query.date_to) };
   console.log(query);
-  // console.log(req.headers);
-  // res.header("Access-Control-Allow-Origin", "*");
-  // res.header("Access-Control-Allow-Headers", "X-Requested-With");
-
-  //   query.date = new Date("2016-05-18T16:00:00Z");
 
   const data = await runPost(query);
-  if (await data) {
+  if (data) {
     res.statusCode = 200;
     res.header("Content-Type", "application/json");
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    res.send(data);
+    res.json(data);
   }
 });
 
 async function runPost(query) {
   try {
     const data = db.collection("destinations").insertOne(query);
-    console.log(await data);
-    return await data;
+    const dataArray = Object.entries(await data);
+    const string = dataArray[1][1];
+
+    return {
+      status: "success",
+      id: string,
+    };
   } catch (err) {
     console.error(err);
+    return {
+      status: "error",
+    };
   }
 }
 
