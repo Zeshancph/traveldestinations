@@ -4,7 +4,10 @@ const app = express();
 const cors = require("cors");
 const port = 3002;
 
+// auto-refresh server on file changes: https://www.npmjs.com/package/@types/nodemon
+app.use(express.json());
 app.use(cors());
+//app.use(express.urlencoded());
 
 const connectionString = "mongodb://localhost:27017/traveldestinations";
 //  "mongodb+srv://dragon:hello123@travel-destinations.kjlf6mx.mongodb.net/?retryWrites=true&w=majority";
@@ -18,22 +21,21 @@ mongodb.connect(
   }
 );
 
-// auto-refresh server on file changes: https://www.npmjs.com/package/@types/nodemon
-app.use(express.json());
-
 app.post("/destinations", async (req, res) => {
   const query = req.body;
   console.log(query);
-  console.log(req.headers);
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  res.send("hey");
+  // console.log(req.headers);
+  // res.header("Access-Control-Allow-Origin", "*");
+  // res.header("Access-Control-Allow-Headers", "X-Requested-With");
+
   //   query.date = new Date("2016-05-18T16:00:00Z");
 
   const data = await runPost(query);
   if (await data) {
     res.statusCode = 200;
-    res.setHeader("Content-Type", "application/json");
+    res.header("Content-Type", "application/json");
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
     res.send(data);
   }
 });

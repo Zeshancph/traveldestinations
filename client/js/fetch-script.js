@@ -4,14 +4,13 @@ export async function createDestination(payload) {
   console.log("payload");
   console.log(payload);
 
-  let headers = new Headers();
-  headers.append("Content-Type", "application/json");
-  headers.append("Access-Control-Allow-Origin", "*");
+  // const myHeaders = new Headers();
+  // myHeaders.append("Content-Type", 'application/json"');
 
   const options = {
-    mode: "cors",
     method: "POST",
-    headers: headers,
+    headers: { "Content-Type": "application/json" },
+    //headers: myHeaders,
     body: JSON.stringify(payload),
   };
 
