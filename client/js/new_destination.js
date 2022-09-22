@@ -20,7 +20,7 @@ formCreate.addEventListener("submit", async function (event) {
       clearForm(formCreate);
       modifyEditLink(serverResponse.id);
     } else {
-      console.error(await serverResponse.status);
+      console.error(await serverResponse);
     }
   } else {
     console.log("form not validated, do nothing");

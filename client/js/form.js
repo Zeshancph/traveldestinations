@@ -92,6 +92,7 @@ function scrollToError(form) {
 }
 
 export function collectFormData(form) {
+  console.log("collect form data");
   return {
     title: form.elements.title.value.trim(),
     date_from: new Date(form.elements.date_from.value),
@@ -114,4 +115,15 @@ export function clearForm(form) {
   form.elements.description.value = "";
   form.elements.picture.value = "";
   form.querySelector("#picture_preview").src = "img/placeholder-300x225.jpg";
+}
+
+export function setFormValues(form, destination) {
+  form.elements.title.value = destination.title;
+  form.elements.date_from.value = destination.date_from.split("T")[0];
+  form.elements.date_from.classList.add("input_date--has-value");
+  form.elements.date_to.value = destination.date_to.split("T")[0];
+  form.elements.date_to.classList.add("input_date--has-value");
+  form.elements.country.value = destination.country;
+  form.elements.location.value = destination.location;
+  form.elements.description.value = destination.description;
 }
