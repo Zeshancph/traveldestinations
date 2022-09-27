@@ -15,12 +15,13 @@ formCreate.addEventListener("submit", async function (event) {
     console.log("form validated, post changes");
     const destination = collectFormData(formCreate);
     const serverResponse = await createDestination(destination);
-    if ((await serverResponse.status) === "success") {
-      console.log(await serverResponse);
-      clearForm(formCreate);
-      modifyEditLink(serverResponse.id);
+    console.log(serverResponse);
+    if (serverResponse.errors) {
+      console.log("handle errors");
+      // todo: add errors handling from server side validation
     } else {
-      console.error(await serverResponse);
+      clearForm(formCreate);
+      modifyEditLink(serverResponse._id);
     }
   } else {
     console.log("form not validated, do nothing");

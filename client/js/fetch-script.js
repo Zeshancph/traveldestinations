@@ -9,9 +9,11 @@ export async function createDestination(payload) {
 
   try {
     const response = await fetch(url, options);
+    console.log(response.status);
     return await response.json();
   } catch (err) {
     console.error(err);
+    return await response.json();
   }
 }
 
@@ -19,11 +21,12 @@ export async function getDestination(id) {
   const getUrl = `${url}/${id}`;
   const options = {
     method: "GET",
-    headers: { "Content-Type": "text/plain" },
+    headers: { "Content-Type": "application/json" },
   };
 
   try {
     const response = await fetch(getUrl, options);
+    console.log(response.status);
     return response.json();
   } catch (err) {
     console.error(err);
@@ -42,6 +45,7 @@ export async function updateDestination(id, payload) {
 
   try {
     const response = await fetch(updateUrl, options);
+    console.log(response.status);
     return await response.json();
   } catch (err) {
     console.error(err);
