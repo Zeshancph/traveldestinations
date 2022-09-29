@@ -30,19 +30,13 @@ formUpdate.addEventListener("submit", async function (event) {
     const serverResponse = await updateDestination(id, destination);
     if (serverResponse.errors) {
       console.log("handle errors");
+      console.log(serverResponse.errors);
       // todo: add error handling for failed server-side validation
     } else {
       clearForm(formUpdate);
-      //redirectToIndex();
+      redirectToIndex();
       console.log(serverResponse);
     }
-    // if ((await serverResponse.status) === "success") {
-    //   console.log(serverResponse);
-    //   clearForm(formUpdate);
-    //   //redirectToIndex();
-    // } else {
-    //   console.error(serverResponse);
-    // }
   } else {
     console.log("form not validated, do nothing");
   }

@@ -8,10 +8,7 @@ const DestinationSchema = new Schema({
     required: "End date connot be empty",
     validate: {
       validator: function (input) {
-        return (
-          typeof new Date(input) === "date" &&
-          new Date(input >= new Date(this.date_from))
-        );
+        return new Date(input >= new Date(this.date_from));
       },
       message: "Start date cannot be later than end date",
     },

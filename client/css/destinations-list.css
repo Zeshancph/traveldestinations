@@ -7,6 +7,7 @@
   justify-content: center;
   align-items: center;
   gap: 30px;
+  margin-bottom: 50px;
 }
 
 /*----destination article----*/
@@ -89,11 +90,13 @@
   margin-bottom: 20px;
   color: #86513e;
   border: 1px solid #86513e;
+  text-decoration: none;
 }
 
 .buttons > .edit_btn:hover {
   background-color: #f0cabd;
   transition: background-color 0.1s;
+  text-decoration: none;
 }
 
 .buttons > .delete_btn {
