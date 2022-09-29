@@ -40,12 +40,8 @@ app.post("/destinations", async (req, res) => {
 
   destination.save(function (err) {
     if (err) {
-      console.log("error");
-      console.error(err);
       res.status(422).json(err);
     } else {
-      console.log("destination");
-      console.log(destination);
       res.status(201).json(destination);
     }
   });
@@ -53,7 +49,6 @@ app.post("/destinations", async (req, res) => {
 
 // PUT request
 app.put("/destinations/:id", async (req, res) => {
-  console.log("PUT");
   const id = req.params.id;
   const ObjectID = require("mongodb").ObjectId;
 
@@ -72,12 +67,8 @@ app.put("/destinations/:id", async (req, res) => {
     { runValidators: true, new: true },
     function (err, destination) {
       if (err) {
-        console.log("error");
-        console.error(err);
         res.status(422).json(err);
       } else {
-        console.log("updated in db destination");
-        console.log(destination);
         res.status(201).json(destination);
       }
     }
@@ -93,12 +84,35 @@ app.get("/destinations/:id", async (req, res) => {
 
   Destination.findOne(query, function (err, destination) {
     if (err) {
-      console.log("error");
-      console.error(err);
       res.status(422).json(err);
     } else {
-      console.log("destination");
-      console.log(destination);
+      res.status(200).json(destination);
+    }
+  });
+});
+
+// GET request for all destination objects
+app.get("/destinations", async (req, res) => {
+  Destination.find({}, function (err, destinations) {
+    if (err) {
+      res.status(422).json(err);
+    } else {
+      res.status(200).json(destinations);
+    }
+  });
+});
+
+// DELETE request
+app.delete("/destinations/:id", async (req, res) => {
+  const id = req.params.id;
+  var ObjectID = require("mongodb").ObjectId;
+  var o_id = new ObjectID(id);
+  const query = { _id: o_id };
+
+  Destination.deleteOne(query, function (err, destination) {
+    if (err) {
+      res.status(422).json(err);
+    } else {
       res.status(200).json(destination);
     }
   });

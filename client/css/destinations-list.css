@@ -3,6 +3,105 @@
 .destinations_list {
   min-height: 500px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 30px;
+}
+
+/*----destination article----*/
+.destination {
+  display: flex;
+  border: 1px solid #d39b87;
+  border-radius: 10px;
+  max-width: 900px;
+  height: 225px;
+  background-color: #fae8dc;
+}
+
+.image {
+  height: 100%;
+}
+
+.image > img {
+  height: 100%;
+  width: auto;
+  border-radius: 10px 0 0 10px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  flex-grow: 1;
+}
+
+.content .address {
+  font-size: 12px;
+}
+
+.content .address > .country {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.content .address > .location {
+  font-weight: 400;
+}
+
+.content .title {
+  font-size: 30px;
+}
+
+.content .duration {
+  font-size: 12px;
+  font-weight: 500;
+  padding-top: 10px;
+}
+
+.content .description {
+  font-size: 12px;
+}
+
+.buttons {
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.edit_btn,
+.delete_btn {
+  font-size: 14px;
+  padding: 0.2rem 0.6rem;
+  font-family: "Open Sans", sans-serif;
+  cursor: pointer;
+  border-radius: 0.2rem;
+  background-color: transparent;
+  transition: background-color 0.1s;
+}
+
+.buttons > .edit_btn {
+  margin-bottom: 20px;
+  color: #86513e;
+  border: 1px solid #86513e;
+}
+
+.buttons > .edit_btn:hover {
+  background-color: #f0cabd;
+  transition: background-color 0.1s;
+}
+
+.buttons > .delete_btn {
+  color: #e95433;
+  border: 1px solid #e95433;
+}
+
+.buttons > .delete_btn:hover {
+  background-color: #f8c5ba;
+  transition: background-color 0.1s;
 }
