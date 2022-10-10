@@ -2,13 +2,14 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const DestinationSchema = new Schema({
   title: { type: String, required: "Title cannot be empty", maxLength: 30 },
-  date_from: { type: Date, required: "Start date connot be empty" },
+  date_from: { type: Date, required: true },
   date_to: {
     type: Date,
-    required: "End date connot be empty",
     validate: {
-      validator: function (input) {
-        return new Date(input >= new Date(this.date_from));
+      validator: (input) => {
+        // console.log(this);
+        // console.log(input);
+        return new Date(input) >= new Date(this.date_from);
       },
       message: "Start date cannot be later than end date",
     },

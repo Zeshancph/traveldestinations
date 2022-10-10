@@ -21,7 +21,7 @@ try {
   mongoose.connect(
     connectionStringAtlas,
     { useNewUrlParser: true, useUnifiedTopology: true },
-    () => console.log(" Mongoose is connected")
+    () => console.log("Mongoose is connected")
   );
 } catch (err) {
   console.log("could not connect");

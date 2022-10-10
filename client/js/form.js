@@ -1,82 +1,62 @@
 export function validateForm(form) {
-  const errors = {
-    title: false,
-    date: false,
-    country: false,
-    location: false,
-    description: false,
-    picture: false,
-  };
+  const errors = {};
 
   if (form.elements.title.value.trim() == "") {
-    form.querySelector(".label_title").classList.add("error");
-    errors.title = true;
+    errors.title = {};
+    errors.title.message = "Title cannot be empty";
   } else {
-    form.querySelector(".label_title").classList.remove("error");
-    errors.title = false;
+    delete errors.title;
   }
 
   const from = new Date(form.elements.date_from.value);
   const to = new Date(form.elements.date_to.value);
   if (from.getTime() > to.getTime()) {
-    form.querySelector(".label_date").classList.add("error");
-    errors.date = true;
+    errors.date_to = {};
+    errors.date_to.message = "Start date cannot be later than end date";
   } else {
-    form.querySelector(".label_date").classList.remove("error");
-    errors.date = false;
+    delete errors.date_to;
   }
 
   if (form.elements.country.value.trim() == "") {
-    form.querySelector(".label_country").classList.add("error");
-    errors.country = true;
+    errors.country = {};
+    errors.country.message = "Country cannot be empty";
   } else {
-    form.querySelector(".label_country").classList.remove("error");
-    errors.country = false;
+    delete errors.country;
   }
 
   if (form.elements.location.value.trim() == "") {
-    form.querySelector(".label_location").classList.add("error");
-    errors.location = true;
+    errors.location = {};
+    errors.location.message = "Location cannot be empty";
   } else {
-    form.querySelector(".label_location").classList.remove("error");
-    errors.location = false;
+    delete errors.location;
   }
 
   if (form.elements.description.value.trim() == "") {
-    form.querySelector(".label_description").classList.add("error");
-    errors.description = true;
+    errors.description = {};
+    errors.description.message = "Description cannot be empty";
   } else {
-    form.querySelector(".label_description").classList.remove("error");
-    errors.description = false;
+    delete errors.description;
   }
 
-  if (
-    form.querySelector(".input_picture").files &&
-    form.querySelector(".input_picture").files[0]
-  ) {
-    const width = form.querySelector(".picture_preview").clientWidth;
-    const height = form.querySelector(".picture_preview").clientHeight;
+  // if (
+  //   form.querySelector(".input_picture").files &&
+  //   form.querySelector(".input_picture").files[0]
+  // ) {
+  //   const width = form.querySelector(".picture_preview").clientWidth;
+  //   const height = form.querySelector(".picture_preview").clientHeight;
 
-    if (width / height != 4 / 3) {
-      form.querySelector(".label_picture").classList.add("error");
-      errors.picture = true;
-    } else {
-      form.querySelector(".label_picture").classList.remove("error");
-      errors.picture = false;
-    }
-  }
+  //   if (width / height != 4 / 3) {
+  //     form.querySelector(".label_picture").classList.add("error");
+  //     errors.picture = true;
+  //   } else {
+  //     form.querySelector(".label_picture").classList.remove("error");
+  //     errors.picture = false;
+  //   }
+  // }
 
   scrollToError(form);
 
-  return (
-    !errors.title &&
-    !errors.country &&
-    !errors.location &&
-    !errors.description &&
-    !errors.picture &&
-    !errors.date
-  );
-  // return true;
+  return errors;
 }
 
 function scrollToError(form) {
@@ -90,9 +70,13 @@ function scrollToError(form) {
 
 export function collectFormData(form) {
   console.log("collect form data");
+  console.log(form.elements.date_from.value.length);
   return {
     title: form.elements.title.value.trim(),
-    date_from: new Date(form.elements.date_from.value),
+    date_from:
+      form.elements.date_from.value.length > 0
+        ? new Date(form.elements.date_from.value)
+        : "",
     date_to: new Date(form.elements.date_to.value),
     country: form.elements.country.value.trim(),
     location: form.elements.location.value.trim(),
@@ -123,4 +107,18 @@ export function setFormValues(form, destination) {
   form.elements.country.value = destination.country;
   form.elements.location.value = destination.location;
   form.elements.description.value = destination.description;
+}
+
+export function handleErrors(errors, form) {
+  const formFields = form.querySelectorAll(".form_field");
+
+  formFields.forEach((field) => {
+    if (errors[`${field.getAttribute("name")}`]) {
+      field.closest("label").querySelector(".help").textContent =
+        errors[`${field.getAttribute("name")}`].message;
+      field.closest("label").classList.add("error");
+    } else {
+      field.closest("label").classList.remove("error");
+    }
+  });
 }

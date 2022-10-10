@@ -35,6 +35,7 @@ export async function getDestination(id) {
 
 export async function updateDestination(id, payload) {
   console.log("update destination");
+  console.log(payload);
   const updateUrl = `${url}/${id}`;
 
   const options = {
