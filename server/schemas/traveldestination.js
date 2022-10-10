@@ -5,14 +5,14 @@ const DestinationSchema = new Schema({
   date_from: { type: Date, required: true },
   date_to: {
     type: Date,
-    validate: {
-      validator: (input) => {
-        // console.log(this);
-        // console.log(input);
-        return new Date(input) >= new Date(this.date_from);
-      },
-      message: "Start date cannot be later than end date",
-    },
+    // validate: {
+    //   validator: (input) => {
+    //     // console.log(this);
+    //     // console.log(input);
+    //     return new Date(input) >= new Date(this.date_from);
+    //   },
+    //   message: "Start date cannot be later than end date",
+    // },
   },
   country: { type: String, required: "Country cannot be empty" },
   location: { type: String, required: "Location cannot be empty" },
