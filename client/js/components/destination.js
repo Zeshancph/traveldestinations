@@ -24,10 +24,10 @@ export function createDestinationNode(destination) {
                     <div class="duration">
                         <span class="date_from">${new Date(
                           destination.date_from
-                        ).toLocaleString()}</span> &nbsp;-&nbsp;
+                        ).toLocaleDateString("en-GB")}</span> &nbsp;-&nbsp;
                         <span class="date_to">${new Date(
                           destination.date_to
-                        ).toLocaleString()}</span>
+                        ).toLocaleDateString("en-GB")}</span>
                     </div>
                     <div class="description">
                         <p>${destination.description}</p>
