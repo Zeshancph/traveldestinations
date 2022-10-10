@@ -51,3 +51,34 @@ export async function updateDestination(id, payload) {
     console.error(err);
   }
 }
+
+export async function getAllDestinations() {
+  const options = {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  };
+
+  try {
+    const response = await fetch(url, options);
+    console.log(response.status);
+    return response.json();
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+export async function deleteDestination(id) {
+  const deleteUrl = `${url}/${id}`;
+  const options = {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+  };
+
+  try {
+    const response = await fetch(deleteUrl, options);
+    console.log(response.status);
+    return response.json();
+  } catch (err) {
+    console.error(err);
+  }
+}

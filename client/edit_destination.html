@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/destination-form.css" />
     <link rel="stylesheet" href="css/header.css" />
+    <link rel="stylesheet" href="css/footer.css" />
     <title>Edit Travel Destination</title>
   </head>
   <body>
@@ -19,9 +20,9 @@
           <li class="nav_link">
             <a href="new_destination.html">New destination</a>
           </li>
-          <li class="nav_link">
+          <!-- <li class="nav_link">
             <a href="edit_destination.html">Edit destination</a>
-          </li>
+          </li> -->
         </ul>
       </nav>
     </header>
@@ -32,6 +33,7 @@
         <form class="destination_form" id="update_destination">
           <label for="title" class="label_title"
             >Title
+            <span class="restriction">30 characters max</span>
             <input
               type="text"
               name="title"
@@ -39,6 +41,7 @@
               class="input_title"
               required
               value=""
+              maxlength="30"
             />
             <span class="help">Title cannot be empty</span>
           </label>
@@ -94,6 +97,7 @@
 
           <label class="label_description"
             >Description
+            <span class="restriction">300 characters max</span>
             <textarea
               name="description"
               id="description"
@@ -101,6 +105,7 @@
               rows="5"
               class="input_description"
               required
+              maxlength="300"
             ></textarea>
             <span class="help">Description cannot be empty</span>
           </label>
@@ -118,6 +123,7 @@
                 name="picture"
                 id="picture"
                 class="input_picture"
+                accept="image/jpeg, image/png"
               />
               <span class="help"
                 >Photo in jpeg, jpg, or png format. Image aspect ratio should be
@@ -140,6 +146,10 @@
         </form>
       </section>
     </main>
+
+    <footer>
+      <p>Made as a study project, Cphbusiness, 2022</p>
+    </footer>
 
     <script type="module" src="js/edit_destination.js"></script>
   </body>

@@ -57,11 +57,7 @@ export function validateForm(form) {
     const width = form.querySelector(".picture_preview").clientWidth;
     const height = form.querySelector(".picture_preview").clientHeight;
 
-    if (
-      width / height != 4 / 3 ||
-      (form.querySelector(".input_picture").files[0].type == "image/jpeg" &&
-        form.querySelector(".input_picture").files[0].type == "image/png")
-    ) {
+    if (width / height != 4 / 3) {
       form.querySelector(".label_picture").classList.add("error");
       errors.picture = true;
     } else {
@@ -80,6 +76,7 @@ export function validateForm(form) {
     !errors.picture &&
     !errors.date
   );
+  // return true;
 }
 
 function scrollToError(form) {

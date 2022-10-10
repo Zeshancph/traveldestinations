@@ -116,6 +116,11 @@ input[type="date"].input_date--has-value::-webkit-datetime-edit-year-field {
   font-family: "Open Sans", sans-serif;
 }
 
+.restriction {
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
 .submit_destination {
   padding: 0.2rem 0.6rem;
   font-family: "Open Sans", sans-serif;

@@ -21,7 +21,7 @@ formCreate.addEventListener("submit", async function (event) {
       // todo: add errors handling from server side validation
     } else {
       clearForm(formCreate);
-      modifyEditLink(serverResponse._id);
+      // modifyEditLink(serverResponse._id);
     }
   } else {
     console.log("form not validated, do nothing");
@@ -36,7 +36,7 @@ document.querySelectorAll(".input_date").forEach((elem) => {
   });
 });
 
-function modifyEditLink(id) {
-  document.querySelector("#edit_link").href = `edit_destination.html?id=${id}`;
-  console.log("new destination id has been added to the edit link");
-}
+// function modifyEditLink(id) {
+//   document.querySelector("#edit_link").href = `edit_destination.html?id=${id}`;
+//   console.log("new destination id has been added to the edit link");
+// }

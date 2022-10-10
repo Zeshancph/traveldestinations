@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/destination-form.css" />
     <link rel="stylesheet" href="css/header.css" />
+    <link rel="stylesheet" href="css/footer.css" />
     <title>New Travel Destination</title>
   </head>
   <body>
@@ -19,9 +20,9 @@
           <li class="nav_link">
             <a href="new_destination.html">New destination</a>
           </li>
-          <li class="nav_link">
+          <!-- <li class="nav_link">
             <a id="edit_link" href="edit_destination.html">Edit destination</a>
-          </li>
+          </li> -->
         </ul>
       </nav>
     </header>
@@ -32,12 +33,14 @@
         <form class="destination_form" id="create_destination">
           <label for="title" class="label_title"
             >Title
+            <span class="restriction">30 characters max</span>
             <input
               type="text"
               name="title"
               id="title"
               class="input_title"
               required
+              maxlength="30"
               placeholder="e.g. Rosenborg Castle"
             />
             <span class="help">Title cannot be empty</span>
@@ -92,6 +95,7 @@
 
           <label class="label_description"
             >Description
+            <span class="restriction">300 characters max</span>
             <textarea
               name="description"
               id="description"
@@ -99,6 +103,7 @@
               rows="5"
               class="input_description"
               required
+              maxlength="300"
               placeholder="e.g. Rosenborg Castle was built by one of the most famous Danish kings, Christian IV, in the 17th century. The beautiful castle features 400 years of royal treasures, and the Crown Jewels and Royal Regalia."
             ></textarea>
             <span class="help">Description cannot be empty</span>
@@ -117,6 +122,7 @@
                 name="picture"
                 id="picture"
                 class="input_picture"
+                accept="image/jpeg, image/png"
               />
               <span class="help"
                 >Photo in jpeg, jpg, or png format. Image aspect ratio should be
@@ -139,6 +145,10 @@
         </form>
       </section>
     </main>
+
+    <footer>
+      <p>Made as a study project, Cphbusiness, 2022</p>
+    </footer>
 
     <script type="module" src="js/new_destination.js"></script>
   </body>
