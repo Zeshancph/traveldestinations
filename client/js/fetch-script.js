@@ -40,8 +40,9 @@ export async function updateDestination(id, payload) {
 
   const options = {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
+    //headers: { "Content-Type": "application/json" },
+    //body: JSON.stringify(payload),
+    body: payload,
   };
 
   try {

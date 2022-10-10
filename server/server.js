@@ -4,11 +4,14 @@ const app = express();
 const cors = require("cors");
 const port = 3002;
 const mongoose = require("mongoose");
+const fileUpload = require("express-fileupload");
+
 const Destination = require("./schemas/traveldestination");
 
 // auto-refresh server on file changes: https://www.npmjs.com/package/@types/nodemon
 app.use(express.json());
 app.use(cors());
+app.use(fileUpload({ createParentPath: true }));
 
 // const connectionString = "mongodb://localhost:27017/traveldestinations";
 // const connectionString =
@@ -52,27 +55,48 @@ app.put("/destinations/:id", async (req, res) => {
   const id = req.params.id;
   const ObjectID = require("mongodb").ObjectId;
 
+  console.log(req.body.date_from[1]);
+  //console.log(req.files.picture);
+
   const changedDestination = {
     title: req.body.title,
-    date_from: new Date(req.body.date_from),
-    date_to: new Date(req.body.date_to),
+    date_from: new Date(req.body.date_from[1]),
+    date_to: new Date(req.body.date_to[1]),
     country: req.body.country,
     location: req.body.location,
     description: req.body.description,
+    //picture: req.files.picture,
   };
 
-  Destination.findOneAndUpdate(
-    { _id: ObjectID(id) },
-    changedDestination,
-    { runValidators: true, new: true },
-    function (err, destination) {
-      if (err) {
-        res.status(422).json(err);
-      } else {
-        res.status(201).json(destination);
+  if (req.files) {
+    const filepath = `${__dirname}/uploads/${req.files.picture.name}`;
+    req.files.picture.mv(filepath, (err) => {
+      if (err)
+        return res
+          .status(500)
+          .json({ success: false, message: "Could not upload file" });
+      else changedDestination.picture = filepath;
+      console.log(changedDestination);
+    });
+  }
+
+  try {
+    Destination.findOneAndUpdate(
+      { _id: ObjectID(id) },
+      { $set: changedDestination },
+      { runValidators: true, new: true },
+      function (err, destination) {
+        if (err) {
+          res.status(422).json(err);
+        } else {
+          console.log(destination);
+          res.status(201).json(destination);
+        }
       }
-    }
-  );
+    );
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 // GET request for one destination document

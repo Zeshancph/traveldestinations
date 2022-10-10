@@ -70,19 +70,51 @@ function scrollToError(form) {
 
 export function collectFormData(form) {
   console.log("collect form data");
-  console.log(form.elements.date_from.value.length);
-  return {
-    title: form.elements.title.value.trim(),
-    date_from:
-      form.elements.date_from.value.length > 0
-        ? new Date(form.elements.date_from.value)
-        : "",
-    date_to: new Date(form.elements.date_to.value),
-    country: form.elements.country.value.trim(),
-    location: form.elements.location.value.trim(),
-    description: form.elements.description.value.trim(),
-    // picture: form.elements.picture.files[0],
-  };
+
+  const payload = new FormData();
+  payload.append("title", form.elements.title.value.trim());
+  payload.append(
+    "date_from",
+    form.elements.date_from.value.length > 0
+      ? new Date(form.elements.date_from.value)
+      : ""
+  );
+  payload.append(
+    "date_to",
+    form.elements.date_to.value.length > 0
+      ? new Date(form.elements.date_to.value)
+      : ""
+  );
+  payload.append(
+    "date_from",
+    form.elements.date_from.value.length > 0
+      ? new Date(form.elements.date_from.value)
+      : ""
+  );
+  payload.append(
+    "date_to",
+    form.elements.date_to.value.length > 0
+      ? new Date(form.elements.date_to.value)
+      : ""
+  );
+  payload.append("country", form.elements.country.value.trim());
+  payload.append("location", form.elements.location.value.trim());
+  payload.append("description", form.elements.description.value.trim());
+  payload.append("picture", form.elements.picture.files[0]);
+  console.log(payload);
+  return payload;
+  // return {
+  //   title: form.elements.title.value.trim(),
+  //   date_from:
+  //     form.elements.date_from.value.length > 0
+  //       ? new Date(form.elements.date_from.value)
+  //       : "",
+  //   date_to: new Date(form.elements.date_to.value),
+  //   country: form.elements.country.value.trim(),
+  //   location: form.elements.location.value.trim(),
+  //   description: form.elements.description.value.trim(),
+  //   picture: form.elements.picture.files[0],
+  // };
 }
 
 export function clearForm(form) {

@@ -1,18 +1,19 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const DestinationSchema = new Schema({
+  picture: { type: String, required: "Please upload an image" },
   title: { type: String, required: "Title cannot be empty", maxLength: 30 },
-  date_from: { type: Date, required: true },
+  date_from: { type: Date },
   date_to: {
     type: Date,
-    validate: {
-      validator: (input) => {
-        // console.log(this);
-        // console.log(input);
-        return new Date(input) >= new Date(this.date_from);
-      },
-      message: "Start date cannot be later than end date",
-    },
+    // validate: {
+    //   validator: (input) => {
+    //     // console.log(this);
+    //     // console.log(input);
+    //     return new Date(input) >= new Date(this.date_from);
+    //   },
+    //   message: "Start date cannot be later than end date",
+    // },
   },
   country: { type: String, required: "Country cannot be empty" },
   location: { type: String, required: "Location cannot be empty" },

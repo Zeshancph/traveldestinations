@@ -1,5 +1,5 @@
 - change article layout
-- change image aspect ratio and validation
+- change image aspect ratio and validation ???
 - add uploading and fetching images into / from db
 - add authentication
-- server-side errors handling
+- figure out why we dont have access to this in schema validation function
