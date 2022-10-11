@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/signin.css" />
+    <link rel="stylesheet" href="css/header.css" />
+    <link rel="stylesheet" href="css/footer.css" />
+    <title>Sign In</title>
+  </head>
+  <body>
+    <header class="main_header">
+      <nav class="main_nav">
+        <div class="logo_wrapper">
+          <a href="index.html" class="logo">MyTravelJournal</a>
+        </div>
+        <ul class="nav_links">
+          <li class="nav_link">
+            <a href="new_destination.html">New destination</a>
+          </li>
+          <!-- <li class="nav_link">
+              <a href="edit_destination.html">Edit destination</a>
+            </li> -->
+          <li class="nav_link active">
+            <a href="#" class="sign-in-btn">Sign In</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <main class="signin-main">
+      <form class="signin-form" autocomplete="off">
+        <h2>Sign In</h2>
+        <label
+          >Email
+          <input
+            type="text"
+            name="email"
+            id="email"
+            class="form_field"
+            value=""
+          />
+          <span class="help"></span>
+        </label>
+        <label
+          >Password
+          <input
+            type="password"
+            name="password"
+            id="password"
+            class="form_field"
+            value=""
+          />
+          <span class="help"></span>
+        </label>
+
+        <button type="submit" name="signin" class="submit_signin">
+          sign in
+        </button>
+      </form>
+    </main>
+    <footer>
+      <p>Made as a study project, Cphbusiness, 2022</p>
+    </footer>
+    <script type="module" src="js/signin.js"></script>
+  </body>
+</html>

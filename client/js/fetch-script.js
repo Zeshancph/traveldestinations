@@ -69,16 +69,48 @@ export async function getAllDestinations() {
 }
 
 export async function deleteDestination(id) {
+  console.log("delete destination");
   const deleteUrl = `${url}/${id}`;
+  const tk = localStorage.getItem("utk");
+  console.log(tk);
+
+  if (tk) {
+    const options = {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${tk}`,
+      },
+    };
+
+    try {
+      const response = await fetch(deleteUrl, options);
+      console.log(response.status);
+      return response.json();
+    } catch (err) {
+      console.error(err);
+    }
+  } else {
+    console.log("User are not signed in");
+    return {
+      errors: "User are not signed in",
+    };
+  }
+}
+
+export async function signIn(payload) {
+  console.log(payload);
+  const signInUrl = "http://127.0.0.1:3002/auth/signin";
   const options = {
-    method: "DELETE",
+    method: "POST",
     headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
   };
 
   try {
-    const response = await fetch(deleteUrl, options);
+    const response = await fetch(signInUrl, options);
     console.log(response.status);
-    return response.json();
+    return await response.json();
   } catch (err) {
     console.error(err);
   }
