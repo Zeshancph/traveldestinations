@@ -56,46 +56,33 @@ app.put("/destinations/:id", async (req, res) => {
   const ObjectID = require("mongodb").ObjectId;
 
   console.log(req.body.date_from[1]);
-  //console.log(req.files.picture);
+  console.log(req.files.picture);
 
-  const changedDestination = {
-    title: req.body.title,
-    date_from: new Date(req.body.date_from[1]),
-    date_to: new Date(req.body.date_to[1]),
-    country: req.body.country,
-    location: req.body.location,
-    description: req.body.description,
-    //picture: req.files.picture,
-  };
+  const destination = await Destination.findOne({ _id: ObjectID(id) });
+  destination.title = req.body.title;
+  destination.date_from = new Date(req.body.date_from[1]);
+  destination.date_to = new Date(req.body.date_to[1]);
+  destination.country = req.body.country;
+  destination.location = req.body.location;
+  destination.description = req.body.description;
 
-  if (req.files) {
+  if (req.files && destination) {
     const filepath = `${__dirname}/uploads/${req.files.picture.name}`;
     req.files.picture.mv(filepath, (err) => {
       if (err)
         return res
           .status(500)
           .json({ success: false, message: "Could not upload file" });
-      else changedDestination.picture = filepath;
-      console.log(changedDestination);
+      else destination.picture = filepath;
+      console.log(destination);
     });
   }
 
   try {
-    Destination.findOneAndUpdate(
-      { _id: ObjectID(id) },
-      { $set: changedDestination },
-      { runValidators: true, new: true },
-      function (err, destination) {
-        if (err) {
-          res.status(422).json(err);
-        } else {
-          console.log(destination);
-          res.status(201).json(destination);
-        }
-      }
-    );
+    await destination.save();
+    res.status(201).json(destination);
   } catch (err) {
-    console.log(err);
+    res.status(422).json(err);
   }
 });
 
