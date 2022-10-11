@@ -1,6 +1,6 @@
 import { removeDestination } from "../script.js";
 
-export function createDestinationNode(destination) {
+export function createDestinationNode(destination, userSignedIn) {
   console.log("create destination Node");
   const article = document.createElement("article");
   article.dataset.id = destination._id;
@@ -38,9 +38,9 @@ export function createDestinationNode(destination) {
                     <a href="edit_destination.html?id=${
                       destination._id
                     }" class="edit_btn">edit</a>
-                    <button data-id="${
-                      destination._id
-                    }" class="delete_btn">delete</button>
+                    <button data-id="${destination._id}" class="delete_btn" ${
+    !userSignedIn ? "hidden" : ""
+  } >delete</button>
                 </div> `;
 
   article.insertAdjacentHTML("afterbegin", html);
