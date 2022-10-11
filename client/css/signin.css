@@ -1,0 +1,60 @@
+.nav_link.active a {
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid brown;
+}
+
+.signin-main {
+  min-height: 62vh;
+  max-width: 400px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 100px;
+}
+
+h2 {
+  text-align: center;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+label input:not(label input[type="file"]),
+label textarea {
+  margin-top: 0.2rem;
+  margin-bottom: 0;
+  border: 1px solid #86513e;
+  border-radius: 0.2rem;
+  padding: 0.3rem;
+}
+
+label .help {
+  font-size: 0.8rem;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.2s;
+}
+
+label .form_field {
+  display: block;
+  width: 95%;
+}
+
+.submit_signin {
+  padding: 0.2rem 0.6rem;
+  font-family: "Open Sans", sans-serif;
+  font-size: 19px;
+  cursor: pointer;
+  border: 1px solid #86513e;
+  border-radius: 0.2rem;
+  color: #86513e;
+  background-color: transparent;
+  transition: background-color 0.1s;
+  margin-top: 10px;
+}
+
+.submit_signin:hover {
+  background-color: #f0cabd;
+  transition: background-color 0.1s;
+}
