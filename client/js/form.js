@@ -38,21 +38,24 @@ export function validateForm(form) {
     delete errors.description;
   }
 
-  // if (
-  //   form.querySelector(".input_picture").files &&
-  //   form.querySelector(".input_picture").files[0]
-  // ) {
-  //   const width = form.querySelector(".picture_preview").clientWidth;
-  //   const height = form.querySelector(".picture_preview").clientHeight;
+  if (
+    form.querySelector(".input_picture").files &&
+    form.querySelector(".input_picture").files[0]
+  ) {
+    const width = form.querySelector(".picture_preview").clientWidth;
+    const height = form.querySelector(".picture_preview").clientHeight;
 
-  //   if (width / height != 4 / 3) {
-  //     form.querySelector(".label_picture").classList.add("error");
-  //     errors.picture = true;
-  //   } else {
-  //     form.querySelector(".label_picture").classList.remove("error");
-  //     errors.picture = false;
-  //   }
-  // }
+    if (width / height != 4 / 3) {
+      errors.picture = {};
+      errors.picture.message = `Image aspect ratio should be
+      4:3, customize and download the right image
+      <a href="https://croppola.com/#aspectRatio=4:3" target="_blank"
+        >here</a
+      >`;
+    } else {
+      delete errors.picture;
+    }
+  }
 
   scrollToError(form);
 
@@ -103,18 +106,6 @@ export function collectFormData(form) {
   payload.append("picture", form.elements.picture.files[0]);
   console.log(payload);
   return payload;
-  // return {
-  //   title: form.elements.title.value.trim(),
-  //   date_from:
-  //     form.elements.date_from.value.length > 0
-  //       ? new Date(form.elements.date_from.value)
-  //       : "",
-  //   date_to: new Date(form.elements.date_to.value),
-  //   country: form.elements.country.value.trim(),
-  //   location: form.elements.location.value.trim(),
-  //   description: form.elements.description.value.trim(),
-  //   picture: form.elements.picture.files[0],
-  // };
 }
 
 export function clearForm(form) {
@@ -146,7 +137,7 @@ export function handleErrors(errors, form) {
 
   formFields.forEach((field) => {
     if (errors[`${field.getAttribute("name")}`]) {
-      field.closest("label").querySelector(".help").textContent =
+      field.closest("label").querySelector(".help").innerHTML =
         errors[`${field.getAttribute("name")}`].message;
       field.closest("label").classList.add("error");
     } else {

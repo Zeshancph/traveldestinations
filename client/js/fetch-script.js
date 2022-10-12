@@ -63,7 +63,8 @@ export async function getAllDestinations() {
   try {
     const response = await fetch(url, options);
     console.log(response.status);
-    return response.json();
+    // return response.json();
+    return await response;
   } catch (err) {
     console.error(err);
   }

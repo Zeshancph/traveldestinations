@@ -4,16 +4,26 @@ const cors = require("cors");
 const port = 3002;
 const mongoose = require("mongoose");
 
+// for authentification
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const passportJWT = require("passport-jwt");
 const ExtractJwt = passportJWT.ExtractJwt;
 const JwtStrategy = passportJWT.Strategy;
 const bcrypt = require("bcrypt");
+
+// for .env
 const dotenv = require("dotenv");
 dotenv.config();
+
+// for getting images from client-side
 const fileUpload = require("express-fileupload");
 
+// for sending images to client-side
+const http = require("http");
+const fs = require("fs");
+
+// mongoose schemas
 const Destination = require("./schemas/traveldestination");
 const User = require("./schemas/userschema.js");
 
@@ -21,6 +31,9 @@ const User = require("./schemas/userschema.js");
 app.use(express.json());
 app.use(cors());
 app.use(fileUpload({ createParentPath: true }));
+
+/*----------- CONNECT TO MONGODB ATLAS CLUSTER ------------------
+---------------------------------------------------------------*/
 
 // const connectionString = "mongodb://localhost:27017/traveldestinations";
 // const connectionString =
@@ -39,6 +52,8 @@ try {
   console.log("could not connect");
 }
 
+/*---------------------- PASSPORT STRATEGY ---------------------
+---------------------------------------------------------------*/
 // strategy for checking if user is signed in or not
 const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -151,9 +166,6 @@ app.put("/destinations/:id", async (req, res) => {
   const id = req.params.id;
   const ObjectID = require("mongodb").ObjectId;
 
-  console.log(req.body.date_from[1]);
-  console.log(req.files.picture);
-
   const destination = await Destination.findOne({ _id: ObjectID(id) });
   destination.title = req.body.title;
   destination.date_from = new Date(req.body.date_from[1]);
@@ -169,14 +181,16 @@ app.put("/destinations/:id", async (req, res) => {
         return res
           .status(500)
           .json({ success: false, message: "Could not upload file" });
-      else destination.picture = filepath;
-      console.log(destination);
+      else {
+        destination.picture = filepath;
+      }
     });
   }
 
   try {
-    await destination.save();
-    res.status(201).json(destination);
+    const savedDestination = await destination.save();
+    console.log(savedDestination);
+    res.status(201).json(savedDestination);
   } catch (err) {
     res.status(422).json(err);
   }
@@ -206,7 +220,29 @@ app.get("/destinations", async (req, res) => {
         errors: err,
       });
     } else {
-      res.status(200).json(destinations);
+      destinations.forEach((destination) => {
+        if (destination.picture !== "") {
+          let img = destination.picture;
+
+          fs.access(img, fs.constants.F_OK, (err) => {
+            //check that we can access  the file
+            console.log(`${img} ${err ? "does not exist" : "exists"}`);
+          });
+
+          fs.readFile(img, function (err, content) {
+            if (err) {
+              console.log("404 - no image");
+            } else {
+              //specify the content type in the response will be an image
+              res.writeHead(200, { "Content-type": "image/jpg" });
+              res.end(content);
+              destination.picture = content;
+            }
+          });
+          console.log(destination.picture);
+        }
+      });
+      //res.status(200).json(destinations);
     }
   });
 });
@@ -231,6 +267,8 @@ app.delete(
   }
 );
 
+/*-------------------- APP LISTENS ON PORT ---------------------
+---------------------------------------------------------------*/
 app.listen(port, () => {
   console.log(`Travel destinations app listening on port ${port}`);
 });

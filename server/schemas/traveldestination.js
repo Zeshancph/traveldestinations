@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const DestinationSchema = new Schema({
-  picture: { type: String, required: "Please upload an image" },
   title: { type: String, required: "Title cannot be empty", maxLength: 30 },
   date_from: { type: Date },
   date_to: {
@@ -22,7 +21,11 @@ const DestinationSchema = new Schema({
     required: "Description cannot be empty",
     maxLength: 300,
   },
+  picture: { type: String },
 });
+
+// DestinationSchema.add({ picture: String });
+
 module.exports = mongoose.model("Destination", DestinationSchema);
 
 // validate: {
