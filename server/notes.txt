@@ -1,0 +1,8 @@
+mongosh "mongodb+srv://travel-destinations.kjlf6mx.mongodb.net/travel_destinations_db" --apiVersion 1 --username dragon
+Enter password: hello123
+Connected
+
+// add picture property to the existing documents
+db.destinations.updateOne( {_id: ObjectId('6332e75d04483475899879db')} , 
+    { $set: {"picture": "C:\\Users\\bov-1\\study\\cphbusiness\\semester1\\assignments\\traveldestinations\\server/uploads/everest_4x3.jpg"} }
+);
