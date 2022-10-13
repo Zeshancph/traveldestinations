@@ -33,6 +33,7 @@ window.addEventListener("load", async function () {
 function populateDOM(destinations, userSignedIn) {
   console.log("populate DOM");
   const container = document.querySelector(".destinations_list");
+  console.log(destinations);
   destinations.forEach((destination) => {
     const destinationNode = createDestinationNode(destination, userSignedIn);
     container.appendChild(destinationNode);

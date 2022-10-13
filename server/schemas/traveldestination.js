@@ -24,7 +24,7 @@ const DestinationSchema = new Schema({
   picture: { type: String },
 });
 
-// DestinationSchema.add({ picture: String });
+//DestinationSchema.add({ picture: String });
 
 module.exports = mongoose.model("Destination", DestinationSchema);
 

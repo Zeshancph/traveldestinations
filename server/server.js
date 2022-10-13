@@ -32,6 +32,10 @@ app.use(express.json());
 app.use(cors());
 app.use(fileUpload({ createParentPath: true }));
 
+// Function to serve all static files inside public directory.
+app.use(express.static("public"));
+app.use("/uploads", express.static("uploads"));
+
 /*----------- CONNECT TO MONGODB ATLAS CLUSTER ------------------
 ---------------------------------------------------------------*/
 
@@ -141,16 +145,22 @@ app.post("/auth/signin", (req, res) => {
 
 /*------------------------ CRUD ROUTES -------------------------
 ---------------------------------------------------------------*/
+
 // POST request
 app.post("/destinations", async (req, res) => {
+  moveImageToUploads(req.files);
+
   const destination = new Destination({
     title: req.body.title,
-    date_from: new Date(req.body.date_from),
-    date_to: new Date(req.body.date_to),
+    date_from: new Date(req.body.date_from[1]),
+    date_to: new Date(req.body.date_to[1]),
     country: req.body.country,
     location: req.body.location,
     description: req.body.description,
+    picture: req.files && req.files.picture ? req.files.picture.name : "",
   });
+
+  console.log(destination);
 
   destination.save(function (err) {
     if (err) {
@@ -167,25 +177,18 @@ app.put("/destinations/:id", async (req, res) => {
   const ObjectID = require("mongodb").ObjectId;
 
   const destination = await Destination.findOne({ _id: ObjectID(id) });
+  if (destination) {
+    moveImageToUploads(req.files);
+  }
+
   destination.title = req.body.title;
   destination.date_from = new Date(req.body.date_from[1]);
   destination.date_to = new Date(req.body.date_to[1]);
   destination.country = req.body.country;
   destination.location = req.body.location;
   destination.description = req.body.description;
-
-  if (req.files && destination) {
-    const filepath = `${__dirname}/uploads/${req.files.picture.name}`;
-    req.files.picture.mv(filepath, (err) => {
-      if (err)
-        return res
-          .status(500)
-          .json({ success: false, message: "Could not upload file" });
-      else {
-        destination.picture = filepath;
-      }
-    });
-  }
+  destination.picture =
+    req.files && req.files.picture ? req.files.picture.name : "";
 
   try {
     const savedDestination = await destination.save();
@@ -207,7 +210,10 @@ app.get("/destinations/:id", async (req, res) => {
     if (err) {
       res.status(422).json(err);
     } else {
-      res.status(200).json(destination);
+      const imagePath = getImagePath(destination.picture);
+      const modifiedDestination = { ...destination._doc, picture: imagePath };
+      console.log(modifiedDestination);
+      res.status(200).json(modifiedDestination);
     }
   });
 });
@@ -222,27 +228,10 @@ app.get("/destinations", async (req, res) => {
     } else {
       destinations.forEach((destination) => {
         if (destination.picture !== "") {
-          let img = destination.picture;
-
-          fs.access(img, fs.constants.F_OK, (err) => {
-            //check that we can access  the file
-            console.log(`${img} ${err ? "does not exist" : "exists"}`);
-          });
-
-          fs.readFile(img, function (err, content) {
-            if (err) {
-              console.log("404 - no image");
-            } else {
-              //specify the content type in the response will be an image
-              res.writeHead(200, { "Content-type": "image/jpg" });
-              res.end(content);
-              destination.picture = content;
-            }
-          });
-          console.log(destination.picture);
+          destination.picture = getImagePath(destination.picture);
         }
       });
-      //res.status(200).json(destinations);
+      res.status(200).json(destinations);
     }
   });
 });
@@ -266,6 +255,33 @@ app.delete(
     });
   }
 );
+
+/*-------------------- UTILITY FUNCTIONS -----------------------
+---------------------------------------------------------------*/
+// constract link to image before sending it to client
+function getImagePath(img_name) {
+  if (img_name.length > 0) {
+    return `http://localhost:${port}/uploads/${img_name}`;
+  } else {
+    return "";
+  }
+}
+
+// move image file that came from client to uploads folder in server
+async function moveImageToUploads(files) {
+  if (files) {
+    const filepath = `${__dirname}/uploads/${files.picture.name}`;
+    console.log(filepath);
+    await files.picture.mv(filepath, (err) => {
+      if (err) {
+        console.log("could not upload file");
+        return "";
+      } else {
+        console.log("file has been moved");
+      }
+    });
+  }
+}
 
 /*-------------------- APP LISTENS ON PORT ---------------------
 ---------------------------------------------------------------*/

@@ -130,6 +130,11 @@ export function setFormValues(form, destination) {
   form.elements.country.value = destination.country;
   form.elements.location.value = destination.location;
   form.elements.description.value = destination.description;
+
+  const imagePreview = document.querySelector("#picture_preview");
+  if (imagePreview && destination.picture.length > 0) {
+    imagePreview.src = destination.picture;
+  }
 }
 
 export function handleErrors(errors, form) {
