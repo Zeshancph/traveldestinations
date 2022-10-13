@@ -1,2 +1,6 @@
-- change image aspect ratio and validation ???
+
 - figure out why we dont have access to this in schema validation function
+
+for future iterations:
+ - create unique names for images when moving them into the uploads folder
+ - delete images in the upload folder when deleting destination document in the mongodb
