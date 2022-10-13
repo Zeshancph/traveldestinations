@@ -117,3 +117,21 @@ export async function signIn(payload) {
     console.error(err);
   }
 }
+
+export async function signUp(payload) {
+  console.log(payload);
+  const signUpUrl = "http://127.0.0.1:3002/auth/signup";
+  const options = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  };
+
+  try {
+    const response = await fetch(signUpUrl, options);
+    console.log(response.status);
+    return await response.json();
+  } catch (err) {
+    console.error(err);
+  }
+}

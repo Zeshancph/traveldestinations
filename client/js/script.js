@@ -8,13 +8,16 @@ const userSignedIn = localStorage.getItem("utk");
 window.addEventListener("load", async function () {
   // sign in - out
   const singInBtn = document.querySelector(".sign-in-btn");
+  const signUpBtn = document.querySelector(".sign-up-btn");
   const singOutBtn = document.querySelector(".sign-out-btn");
 
   if (userSignedIn) {
     singInBtn.closest(".nav_link").hidden = true;
+    signUpBtn.closest(".nav_link").hidden = true;
     singOutBtn.closest(".nav_link").hidden = false;
   } else {
     singInBtn.closest(".nav_link").hidden = false;
+    signUpBtn.closest(".nav_link").hidden = false;
     singOutBtn.closest(".nav_link").hidden = true;
   }
   singOutBtn.addEventListener("click", signUserOut);

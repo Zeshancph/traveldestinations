@@ -93,11 +93,17 @@ app.post("/auth/signup", (req, res) => {
     if (err) {
       console.log("error");
       console.error(err);
-      res.status(422).json(err);
+      res.status(422).json({
+        success: false,
+        message: err,
+      });
     } else {
       console.log("user");
       console.log(user);
-      res.status(201).json(user);
+      res.status(201).json({
+        success: true,
+        user: user,
+      });
     }
   });
 });
