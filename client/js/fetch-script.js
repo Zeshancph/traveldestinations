@@ -3,8 +3,8 @@ const url = "http://127.0.0.1:3002/destinations";
 export async function createDestination(payload) {
   const options = {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
+
+    body: payload,
   };
 
   try {
@@ -40,8 +40,9 @@ export async function updateDestination(id, payload) {
 
   const options = {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
+    //headers: { "Content-Type": "application/json" },
+    //body: JSON.stringify(payload),
+    body: payload,
   };
 
   try {
@@ -62,7 +63,8 @@ export async function getAllDestinations() {
   try {
     const response = await fetch(url, options);
     console.log(response.status);
-    return response.json();
+    // return response.json();
+    return await response.json();
   } catch (err) {
     console.error(err);
   }

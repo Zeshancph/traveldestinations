@@ -4,20 +4,40 @@ const cors = require("cors");
 const port = 3002;
 const mongoose = require("mongoose");
 
+// for authentification
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const passportJWT = require("passport-jwt");
 const ExtractJwt = passportJWT.ExtractJwt;
 const JwtStrategy = passportJWT.Strategy;
 const bcrypt = require("bcrypt");
+
+// for .env
 const dotenv = require("dotenv");
 dotenv.config();
+
+// for getting images from client-side
+const fileUpload = require("express-fileupload");
+
+// for sending images to client-side
+const http = require("http");
+const fs = require("fs");
+
+// mongoose schemas
 const Destination = require("./schemas/traveldestination");
 const User = require("./schemas/userschema.js");
 
 // auto-refresh server on file changes: https://www.npmjs.com/package/@types/nodemon
 app.use(express.json());
 app.use(cors());
+app.use(fileUpload({ createParentPath: true }));
+
+// Function to serve all static files inside public directory.
+app.use(express.static("public"));
+app.use("/uploads", express.static("uploads"));
+
+/*----------- CONNECT TO MONGODB ATLAS CLUSTER ------------------
+---------------------------------------------------------------*/
 
 // const connectionString = "mongodb://localhost:27017/traveldestinations";
 // const connectionString =
@@ -36,6 +56,8 @@ try {
   console.log("could not connect");
 }
 
+/*---------------------- PASSPORT STRATEGY ---------------------
+---------------------------------------------------------------*/
 // strategy for checking if user is signed in or not
 const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -123,16 +145,22 @@ app.post("/auth/signin", (req, res) => {
 
 /*------------------------ CRUD ROUTES -------------------------
 ---------------------------------------------------------------*/
+
 // POST request
 app.post("/destinations", async (req, res) => {
+  moveImageToUploads(req.files);
+
   const destination = new Destination({
     title: req.body.title,
-    date_from: new Date(req.body.date_from),
-    date_to: new Date(req.body.date_to),
+    date_from: new Date(req.body.date_from[1]),
+    date_to: new Date(req.body.date_to[1]),
     country: req.body.country,
     location: req.body.location,
     description: req.body.description,
+    picture: req.files && req.files.picture ? req.files.picture.name : "",
   });
+
+  console.log(destination);
 
   destination.save(function (err) {
     if (err) {
@@ -148,27 +176,27 @@ app.put("/destinations/:id", async (req, res) => {
   const id = req.params.id;
   const ObjectID = require("mongodb").ObjectId;
 
-  const changedDestination = {
-    title: req.body.title,
-    date_from: new Date(req.body.date_from),
-    date_to: new Date(req.body.date_to),
-    country: req.body.country,
-    location: req.body.location,
-    description: req.body.description,
-  };
+  const destination = await Destination.findOne({ _id: ObjectID(id) });
+  if (destination) {
+    moveImageToUploads(req.files);
+  }
 
-  Destination.findOneAndUpdate(
-    { _id: ObjectID(id) },
-    changedDestination,
-    { runValidators: true, new: true },
-    function (err, destination) {
-      if (err) {
-        res.status(422).json(err);
-      } else {
-        res.status(201).json(destination);
-      }
-    }
-  );
+  destination.title = req.body.title;
+  destination.date_from = new Date(req.body.date_from[1]);
+  destination.date_to = new Date(req.body.date_to[1]);
+  destination.country = req.body.country;
+  destination.location = req.body.location;
+  destination.description = req.body.description;
+  destination.picture =
+    req.files && req.files.picture ? req.files.picture.name : "";
+
+  try {
+    const savedDestination = await destination.save();
+    console.log(savedDestination);
+    res.status(201).json(savedDestination);
+  } catch (err) {
+    res.status(422).json(err);
+  }
 });
 
 // GET request for one destination document
@@ -182,7 +210,10 @@ app.get("/destinations/:id", async (req, res) => {
     if (err) {
       res.status(422).json(err);
     } else {
-      res.status(200).json(destination);
+      const imagePath = getImagePath(destination.picture);
+      const modifiedDestination = { ...destination._doc, picture: imagePath };
+      console.log(modifiedDestination);
+      res.status(200).json(modifiedDestination);
     }
   });
 });
@@ -195,6 +226,11 @@ app.get("/destinations", async (req, res) => {
         errors: err,
       });
     } else {
+      destinations.forEach((destination) => {
+        if (destination.picture !== "") {
+          destination.picture = getImagePath(destination.picture);
+        }
+      });
       res.status(200).json(destinations);
     }
   });
@@ -220,6 +256,35 @@ app.delete(
   }
 );
 
+/*-------------------- UTILITY FUNCTIONS -----------------------
+---------------------------------------------------------------*/
+// constract link to image before sending it to client
+function getImagePath(img_name) {
+  if (img_name.length > 0) {
+    return `http://localhost:${port}/uploads/${img_name}`;
+  } else {
+    return "";
+  }
+}
+
+// move image file that came from client to uploads folder in server
+async function moveImageToUploads(files) {
+  if (files) {
+    const filepath = `${__dirname}/uploads/${files.picture.name}`;
+    console.log(filepath);
+    await files.picture.mv(filepath, (err) => {
+      if (err) {
+        console.log("could not upload file");
+        return "";
+      } else {
+        console.log("file has been moved");
+      }
+    });
+  }
+}
+
+/*-------------------- APP LISTENS ON PORT ---------------------
+---------------------------------------------------------------*/
 app.listen(port, () => {
   console.log(`Travel destinations app listening on port ${port}`);
 });

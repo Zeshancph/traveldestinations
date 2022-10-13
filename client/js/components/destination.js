@@ -7,9 +7,11 @@ export function createDestinationNode(destination, userSignedIn) {
   article.className = "destination";
 
   const html = `<div class="image">
-                    <img src="img/hippo_4x3.jpg" alt="${
-                      destination.title
-                    } picture" />
+                    <img src="${
+                      destination.picture.length > 0
+                        ? destination.picture
+                        : "img/placeholder-300x225.jpg"
+                    }" alt="${destination.title} picture" />
                 </div>
                 <div class="content">
                     <div class="content_top">

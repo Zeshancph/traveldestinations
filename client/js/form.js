@@ -38,21 +38,24 @@ export function validateForm(form) {
     delete errors.description;
   }
 
-  // if (
-  //   form.querySelector(".input_picture").files &&
-  //   form.querySelector(".input_picture").files[0]
-  // ) {
-  //   const width = form.querySelector(".picture_preview").clientWidth;
-  //   const height = form.querySelector(".picture_preview").clientHeight;
+  if (
+    form.querySelector(".input_picture").files &&
+    form.querySelector(".input_picture").files[0]
+  ) {
+    const width = form.querySelector(".picture_preview").clientWidth;
+    const height = form.querySelector(".picture_preview").clientHeight;
 
-  //   if (width / height != 4 / 3) {
-  //     form.querySelector(".label_picture").classList.add("error");
-  //     errors.picture = true;
-  //   } else {
-  //     form.querySelector(".label_picture").classList.remove("error");
-  //     errors.picture = false;
-  //   }
-  // }
+    if (width / height != 4 / 3) {
+      errors.picture = {};
+      errors.picture.message = `Image aspect ratio should be
+      4:3, customize and download the right image
+      <a href="https://croppola.com/#aspectRatio=4:3" target="_blank"
+        >here</a
+      >`;
+    } else {
+      delete errors.picture;
+    }
+  }
 
   scrollToError(form);
 
@@ -70,19 +73,39 @@ function scrollToError(form) {
 
 export function collectFormData(form) {
   console.log("collect form data");
-  console.log(form.elements.date_from.value.length);
-  return {
-    title: form.elements.title.value.trim(),
-    date_from:
-      form.elements.date_from.value.length > 0
-        ? new Date(form.elements.date_from.value)
-        : "",
-    date_to: new Date(form.elements.date_to.value),
-    country: form.elements.country.value.trim(),
-    location: form.elements.location.value.trim(),
-    description: form.elements.description.value.trim(),
-    // picture: form.elements.picture.files[0],
-  };
+
+  const payload = new FormData();
+  payload.append("title", form.elements.title.value.trim());
+  payload.append(
+    "date_from",
+    form.elements.date_from.value.length > 0
+      ? new Date(form.elements.date_from.value)
+      : ""
+  );
+  payload.append(
+    "date_to",
+    form.elements.date_to.value.length > 0
+      ? new Date(form.elements.date_to.value)
+      : ""
+  );
+  payload.append(
+    "date_from",
+    form.elements.date_from.value.length > 0
+      ? new Date(form.elements.date_from.value)
+      : ""
+  );
+  payload.append(
+    "date_to",
+    form.elements.date_to.value.length > 0
+      ? new Date(form.elements.date_to.value)
+      : ""
+  );
+  payload.append("country", form.elements.country.value.trim());
+  payload.append("location", form.elements.location.value.trim());
+  payload.append("description", form.elements.description.value.trim());
+  payload.append("picture", form.elements.picture.files[0]);
+  console.log(payload);
+  return payload;
 }
 
 export function clearForm(form) {
@@ -107,6 +130,11 @@ export function setFormValues(form, destination) {
   form.elements.country.value = destination.country;
   form.elements.location.value = destination.location;
   form.elements.description.value = destination.description;
+
+  const imagePreview = document.querySelector("#picture_preview");
+  if (imagePreview && destination.picture.length > 0) {
+    imagePreview.src = destination.picture;
+  }
 }
 
 export function handleErrors(errors, form) {
@@ -114,7 +142,7 @@ export function handleErrors(errors, form) {
 
   formFields.forEach((field) => {
     if (errors[`${field.getAttribute("name")}`]) {
-      field.closest("label").querySelector(".help").textContent =
+      field.closest("label").querySelector(".help").innerHTML =
         errors[`${field.getAttribute("name")}`].message;
       field.closest("label").classList.add("error");
     } else {

@@ -3,6 +3,7 @@ import { readURL } from "./file.js";
 import { createDestination } from "./fetch-script.js";
 import { clearForm } from "./form.js";
 import { collectFormData } from "./form.js";
+import { redirectToIndex } from "./edit_destination.js";
 
 document.querySelector("#picture").addEventListener("change", readURL);
 
@@ -22,6 +23,7 @@ formCreate.addEventListener("submit", async function (event) {
     } else {
       clearForm(formCreate);
       // modifyEditLink(serverResponse._id);
+      redirectToIndex();
     }
   } else {
     console.log("form not validated, do nothing");
