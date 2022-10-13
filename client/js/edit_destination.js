@@ -26,7 +26,7 @@ document.querySelector("#picture").addEventListener("change", readURL);
 if (formUpdate) {
   formUpdate.addEventListener("submit", async function (event) {
     event.preventDefault();
-    //const formValidated = validateForm(formUpdate);
+
     const errors = validateForm(formUpdate);
     const keys = Object.keys(errors);
     if (!keys.length > 0) {
@@ -40,7 +40,6 @@ if (formUpdate) {
       if (serverResponse.errors) {
         console.log("handle server-side errors");
         console.log(serverResponse.errors);
-        // todo: add error handling for failed server-side validation
         handleErrors(serverResponse.errors, formUpdate);
       } else {
         clearForm(formUpdate);

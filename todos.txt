@@ -1,7 +1,5 @@
-
-- figure out why we dont have access to this in schema validation function
-
 for future iterations:
  - create unique names for images when moving them into the uploads folder
  - delete images in the upload folder when deleting destination document in the mongodb
  - when updating a destination from edit form/page: do not overwrite image name in db if new one was not sent in the FormData
+ - add validation that end date cannot be earlier than the start date (with pre save hook)

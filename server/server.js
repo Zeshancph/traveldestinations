@@ -155,6 +155,8 @@ app.post("/auth/signin", (req, res) => {
 // POST request
 app.post("/destinations", async (req, res) => {
   moveImageToUploads(req.files);
+  console.log(req.body.date_from[1]);
+  console.log(req.body.date_to[1]);
 
   const destination = new Destination({
     title: req.body.title,
