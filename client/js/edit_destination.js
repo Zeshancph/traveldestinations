@@ -14,9 +14,11 @@ const id = urlParams.get("id");
 const formUpdate = document.querySelector("#update_destination");
 
 window.addEventListener("load", async function () {
-  const destination = await getDestination(id);
-  console.log(destination);
-  setFormValues(formUpdate, destination);
+  if (formUpdate) {
+    const destination = await getDestination(id);
+    console.log(destination);
+    setFormValues(formUpdate, destination);
+  }
 });
 
 document.querySelector("#picture").addEventListener("change", readURL);

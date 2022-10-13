@@ -26,6 +26,11 @@
   padding: 0 1rem;
 }
 
+.nav_link.active a {
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid brown;
+}
+
 .nav_links > .nav_link > a {
   text-decoration: none;
   color: #86513e;
