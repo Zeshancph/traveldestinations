@@ -26,7 +26,6 @@ export function signUserOut(event) {
   }
 
   const deleteButtons = document.querySelectorAll(".delete_btn");
-  console.log(deleteButtons);
 
   if (deleteButtons.length > 0) {
     deleteButtons.forEach((btn) => {

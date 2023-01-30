@@ -53,15 +53,16 @@ export async function updateDestination(id, payload) {
 }
 
 export async function getAllDestinations() {
+  console.log("get all destinations");
   const options = {
     method: "GET",
     headers: { "Content-Type": "application/json" },
   };
 
   try {
+    console.log("try");
     const response = await fetch(url, options);
     console.log(response.status);
-    // return response.json();
     return await response.json();
   } catch (err) {
     console.error(err);

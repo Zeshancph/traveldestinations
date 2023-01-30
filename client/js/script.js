@@ -45,7 +45,6 @@ function populateDOM(destinations, userSignedIn) {
 
 export async function removeDestination() {
   console.log("delete destination");
-  console.log(this);
 
   const response = await deleteDestination(this.dataset.id);
   console.log(response);
